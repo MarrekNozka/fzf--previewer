@@ -16,13 +16,14 @@ This uses the programs:
   * `pdftotext` (poppler-utils), for PDF preview
   * `odt2txt`, simple converter from OpenDocument Text 
   * `catdoc` and `docx2txt`, for M\$-Office preview
-  * [`ascii-image-converter`](https://github.com/TheZoraiz/ascii-image-converter) 
+  * [kitty](https://sw.kovidgoyal.net/kitty/) `icat` 
+    or [`ascii-image-converter`](https://github.com/TheZoraiz/ascii-image-converter) 
     for images
 
 On Debian/Devuan based systems you can install them like so:
 
 ```bash
-sudo apt update; sudo apt install -y bat tree hexyl atool poppler-utils odt2txt catdoc
+sudo apt update; sudo apt install -y bat tree hexyl atool poppler-utils odt2txt catdoc kitty
 ```
 
 Similarly, I use this with `fzf` (fuzzy finder), which you will need to follow the usage example.

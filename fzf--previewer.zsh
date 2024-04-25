@@ -4,8 +4,16 @@ FILE_PATH=$1
 
 bat=`/usr/bin/which bat || echo batcat`
 
+kitty +kitten icat --clear --z-index=-1 --transfer-mode=stream 2>/dev/null
 if [ -d "$1" ]; then
 	tree --du -C -L 2 "$FILE_PATH"
+   
+elif which $1 &>/dev/null; then
+    type -a  $1
+    if man -w $1 &>/dev/null; then
+        print
+        man $1 | col -bx | head -n 30
+    fi
 elif ! [ -f "$1" ]; then
     echo $1 | read -A tokens
     for token in $tokens; do
@@ -64,7 +72,13 @@ else
 
         [jJ][pP][gG]|[jJ][pP][eE][gG]|[gG][iI][fF]|[bB][mM][pP]|webp|[pP][nN][gG]|\
         [tT][iI][fF]|[tT][iI][fF][fF])
-            ascii-image-converter --width $[$COLUMNS - 20] --braille --color "${FILE_PATH}" && exit 0
+            zmodload zsh/mathfunc
+            width=$(( $COLUMNS - 10 ))
+            height=$(( int($LINES * 0.77) - 5 ))
+            identify ${FILE_PATH}
+            kitty +kitten icat --z-index=-1 --engine=builtin --clear --align=center --place=${width}x${height}@2x2 --transfer-mode=stream <"${FILE_PATH}" && exit 0
+            ascii-image-converter --dimensions ${with},${height} --braille --color "${FILE_PATH}" && exit 0
+            # fim sdl=600:600 ${FILE_PATH}
             exit 1;;
 
         *)
